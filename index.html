@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Padel Event Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- NAV TABS -->
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="tracker">🎾 Tracker</button>
+  <button class="tab-btn" data-tab="dashboard">📊 Dashboard</button>
+</nav>
+
+<!-- SCREEN: TRACKER -->
+<div id="screen-tracker" class="screen active">
+<main class="app">
+
+  <div class="section-label">MARCADOR</div>
+  <section class="header-row">
+    <div class="scoreboard">
+      <div class="score-line">
+        <span>Nosotros</span>
+        <strong id="our-games">0</strong>
+        <strong id="our-points">0</strong>
+      </div>
+      <div class="score-line">
+        <span>Rivales</span>
+        <strong id="rival-games">0</strong>
+        <strong id="rival-points">0</strong>
+      </div>
+    </div>
+    <select id="deuce-mode">
+      <option value="ADVANTAGE">Ventajas</option>
+      <option value="GOLDEN_POINT">P. oro</option>
+    </select>
+  </section>
+
+  <div class="section-label">CRONÓMETRO</div>
+  <section class="crono-row">
+    <button id="toggle-crono">▶</button>
+    <div id="crono-display">00:00</div>
+    <button id="minus-crono">-5s</button>
+    <button id="plus-crono">+5s</button>
+  </section>
+
+  <div class="section-label blue-label">SERVICIO Y RALLY</div>
+  <section class="service-rally-row blue-block">
+    <div class="service-group">
+      <button id="server-toggle" class="toggle-btn active" data-value="J1">Saca J1</button>
+      <button id="serve-number-toggle" class="toggle-btn active" data-value="1">1º</button>
+    </div>
+    <div class="service-divider"></div>
+    <button id="rally-toggle" class="toggle-btn active" data-value="MENOS_3">R:&lt;3</button>
+  </section>
+
+  <div class="section-label">ZONA NF RIVAL</div>
+  <section class="court">
+    <button class="court-zone" data-zone="RED">RED</button>
+    <button class="court-zone" data-zone="MEDIO">MEDIO</button>
+    <button class="court-zone" data-zone="FONDO">FONDO</button>
+  </section>
+
+  <div class="section-label">CATEGORÍA GOLPE</div>
+  <section class="category-buttons" id="category-buttons"></section>
+
+  <div class="section-label">REVÉS</div>
+  <section class="register-grid">
+    <div class="register-column winner-col">
+      <div class="register-title">G-W/F</div>
+      <div class="register-counter" id="counter-j1-win">0</div>
+      <section class="stroke-buttons" id="stroke-buttons-j1-win"></section>
+    </div>
+    <div class="register-column nf-col">
+      <div class="register-title">P-NF</div>
+      <div class="register-counter" id="counter-j1-nf">0</div>
+      <section class="stroke-buttons" id="stroke-buttons-j1-nf"></section>
+    </div>
+    <div class="register-column lost-col">
+      <div class="register-title">P-W/F</div>
+      <div class="register-counter" id="counter-j1-lost">0</div>
+      <section class="stroke-buttons" id="stroke-buttons-j1-lost"></section>
+    </div>
+  </section>
+
+  <div class="section-label">DERECHA</div>
+  <section class="register-grid">
+    <div class="register-column winner-col">
+      <div class="register-title">G-W/F</div>
+      <div class="register-counter" id="counter-j2-win">0</div>
+      <section class="stroke-buttons" id="stroke-buttons-j2-win"></section>
+    </div>
+    <div class="register-column nf-col">
+      <div class="register-title">P-NF</div>
+      <div class="register-counter" id="counter-j2-nf">0</div>
+      <section class="stroke-buttons" id="stroke-buttons-j2-nf"></section>
+    </div>
+    <div class="register-column lost-col">
+      <div class="register-title">P-W/F</div>
+      <div class="register-counter" id="counter-j2-lost">0</div>
+      <section class="stroke-buttons" id="stroke-buttons-j2-lost"></section>
+    </div>
+  </section>
+
+  <section class="last-event" id="last-event">Sin eventos</section>
+
+  <section class="bottom-row">
+    <span>Eventos: <strong id="event-count">0</strong></span>
+    <button id="reset-crono">Reset</button>
+    <button id="undo-btn" disabled>Undo</button>
+    <button id="export-btn" disabled>CSV</button>
+  </section>
+
+</main>
+</div>
+
+<!-- SCREEN: DASHBOARD -->
+<div id="screen-dashboard" class="screen">
+  <div class="dash-wrap">
+
+    <div class="dash-scoreboard">
+      <div class="dash-team our">
+        <div class="dash-team-label">Nosotros</div>
+        <div class="dash-games" id="dash-our-games">0</div>
+        <div class="dash-pts" id="dash-our-points">0</div>
+      </div>
+      <div class="dash-vs">VS</div>
+      <div class="dash-team rival">
+        <div class="dash-team-label">Rival</div>
+        <div class="dash-games" id="dash-rival-games">0</div>
+        <div class="dash-pts" id="dash-rival-points">0</div>
+      </div>
+    </div>
+
+    <div class="dash-bar-wrap">
+      <span class="dash-bar-label" id="dash-won-label">0 pts</span>
+      <div class="dash-bar-track">
+        <div class="dash-bar-fill" id="dash-win-bar" style="width:50%"></div>
+      </div>
+      <span class="dash-bar-label right" id="dash-lost-label">0 pts</span>
+    </div>
+    <div class="dash-bar-pct" id="dash-win-pct">Sin datos</div>
+
+    <div class="dash-kpi-row">
+      <div class="dash-kpi">
+        <div class="dash-kpi-val" id="dash-total">0</div>
+        <div class="dash-kpi-lbl">Puntos</div>
+      </div>
+      <div class="dash-kpi">
+        <div class="dash-kpi-val" id="dash-avg-dur">—</div>
+        <div class="dash-kpi-lbl">Seg. media</div>
+      </div>
+      <div class="dash-kpi">
+        <div class="dash-kpi-val" id="dash-max-dur">—</div>
+        <div class="dash-kpi-lbl">Seg. máx</div>
+      </div>
+    </div>
+
+    <div class="dash-section-title">WINNERS Y ERRORES</div>
+    <div class="dash-we-grid">
+      <div class="dash-we-cell our">
+        <div class="dash-we-val" id="dash-our-winners">0</div>
+        <div class="dash-we-lbl">W. Nuestros</div>
+      </div>
+      <div class="dash-we-cell bad">
+        <div class="dash-we-val" id="dash-our-errors">0</div>
+        <div class="dash-we-lbl">Err. Nuestros</div>
+      </div>
+      <div class="dash-we-cell rival">
+        <div class="dash-we-val" id="dash-rival-winners">0</div>
+        <div class="dash-we-lbl">W. Rival</div>
+      </div>
+      <div class="dash-we-cell good">
+        <div class="dash-we-val" id="dash-rival-errors">0</div>
+        <div class="dash-we-lbl">Err. Rival</div>
+      </div>
+    </div>
+
+    <div class="dash-section-title">GOLPES POR CATEGORÍA</div>
+    <div class="dash-strokes" id="dash-strokes"><div class="dash-empty">Sin datos aún</div></div>
+
+    <div class="dash-section-title">TIPOS DE GOLPE (TOP 6)</div>
+    <div class="dash-types" id="dash-types"><div class="dash-empty">Sin datos aún</div></div>
+
+    <div class="dash-two-col">
+      <div>
+        <div class="dash-section-title">ZONA DE PISTA</div>
+        <div class="dash-zones" id="dash-zones"><div class="dash-empty">—</div></div>
+      </div>
+      <div>
+        <div class="dash-section-title">SAQUES</div>
+        <div class="dash-zones" id="dash-servers"><div class="dash-empty">—</div></div>
+      </div>
+    </div>
+
+    <button class="dash-export-btn" id="dash-export-btn" disabled>📥 Exportar resumen CSV</button>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
