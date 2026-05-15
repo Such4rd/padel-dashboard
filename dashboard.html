@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Padel</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-YcsIPGdhPK4P/uRW6/sruonlYjA7e339Kz11cHfVhH32nzD9THiwHrm6c2yeUMUStxHXjk4xgoUslOM3Nq1YBg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body class="dashboard-body">
+  <main class="dashboard-page">
+    <header class="dash-header">
+      <div>
+        <h1>Dashboard live del set</h1>
+        <p class="mini-note" id="updated-at">Sin datos cargados</p>
+      </div>
+      <div class="dash-actions">
+        <button class="dash-btn" id="refresh-dashboard">Actualizar</button>
+        <button class="dash-btn" id="download-pdf">PDF</button>
+        <a class="dash-btn" href="index.html">Registro</a>
+      </div>
+    </header>
+
+    <section class="dash-grid" id="kpi-grid"></section>
+
+    <section class="panel">
+      <h2>Servicio y resto</h2>
+      <div class="panel-grid">
+        <div>
+          <h3>Servicio propio</h3>
+          <div id="service-table"></div>
+        </div>
+        <div>
+          <h3>Resto</h3>
+          <div id="rest-table"></div>
+        </div>
+      </div>
+      <div class="panel-grid service-detail-grid">
+        <div>
+          <h3>Servicio Revés / J1</h3>
+          <div id="service-j1-table"></div>
+        </div>
+        <div>
+          <h3>Servicio Derecha / J2</h3>
+          <div id="service-j2-table"></div>
+        </div>
+        <div>
+          <h3>Resto vs R1</h3>
+          <div id="rest-r1-table"></div>
+        </div>
+        <div>
+          <h3>Resto vs R2</h3>
+          <div id="rest-r2-table"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Resumen de puntos</h2>
+      <div class="panel-grid">
+        <div id="won-summary"></div>
+        <div id="lost-summary"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Análisis por jugador</h2>
+      <div class="panel-grid">
+        <div id="j1-panel"></div>
+        <div id="j2-panel"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Golpes, zonas y rally</h2>
+      <div class="panel-grid">
+        <div>
+          <h3>Categorías de golpe</h3>
+          <div id="category-bars"></div>
+        </div>
+        <div>
+          <h3>Zonas NF rival</h3>
+          <div id="zone-bars"></div>
+        </div>
+      </div>
+      <h3>Rally</h3>
+      <div id="rally-bars"></div>
+    </section>
+
+    <div id="report-container" class="hidden"></div>
+  </main>
+
+  <script src="stats.js"></script>
+  <script src="report.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
